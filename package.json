@@ -1,0 +1,22 @@
+{
+  "name": "budgetjs",
+  "version": "1.0.0",
+  "description": "Monthly personal budget application developed with native javascript",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/silvestrevivo/budgetjs.git"
+  },
+  "author": "@silvestrevivo",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/silvestrevivo/budgetjs/issues"
+  },
+  "homepage": "https://github.com/silvestrevivo/budgetjs#readme",
+  "devDependencies": {
+    "node-sass": "^4.7.2"
+  }
+}
