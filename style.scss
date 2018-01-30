@@ -183,12 +183,21 @@ body {
     width: 475px;
     margin-right: 50px;
     &__title { color: $blue; }
+    .item__value,
+    .item__delete--btn{
+        color: $blue;
+    }
 }
 
 .expenses {
     float: left;
     width: 475px;
     &__title { color: $red; }
+    .item__value,
+    .item__percentage,
+    .item__delete--btn{
+        color: $red;
+    }
 }
 
 h2 {
@@ -221,50 +230,40 @@ h2 {
     }
     &:first-child { border-top: 1px solid $light-grey; }
     &:nth-child(even) { background-color: $superlight-grey; }
+    &__delete {
+        float: left;
+        &--btn {
+            font-size: 22px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+            vertical-align: middle;
+            line-height: 1;
+            display: none;
+            &:focus { outline: none; }
+            &:active { transform: translateY(2px); }
+        }
+    }
+    &:hover {
+        .item{
+            &__delete--btn{display: block;}
+            &__value { transform: translateX(-20px); }
+            &__percentage { transform: translateX(-20px); }
+        }
+    }
 }
-
-.income .item__value,
-.income .item__delete--btn {
-    color: $blue;
-}
-
-.expenses .item__value,
-.expenses .item__percentage,
-.expenses .item__delete--btn {
-    color: $red;
-}
-
-
-.item__delete {
-    float: left;
-}
-
-.item__delete--btn {
-    font-size: 22px;
-    background: none;
-    border: none;
-    cursor: pointer;
-    display: inline-block;
-    vertical-align: middle;
-    line-height: 1;
-    display: none;
-}
-
-.item__delete--btn:focus { outline: none; }
-.item__delete--btn:active { transform: translateY(2px); }
-
-.item:hover .item__delete--btn { display: block; }
-.item:hover .item__value { transform: translateX(-20px); }
-.item:hover .item__percentage { transform: translateX(-20px); }
-
 
 .unpaid {
     background-color: $light-red !important;
     cursor: pointer;
     color: $red;
-
+    .item__percentage {
+        box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1);
+    }
+    &:hover{
+        .item__description {
+            font-weight: 900;
+        }
+    }
 }
-
-.unpaid .item__percentage { box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.1); }
-.unpaid:hover .item__description { font-weight: 900; }
-
