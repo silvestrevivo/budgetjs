@@ -17,6 +17,8 @@
   },
   "homepage": "https://github.com/silvestrevivo/budgetjs#readme",
   "devDependencies": {
+    "babel-preset-env": "^1.6.1",
     "node-sass": "^4.7.2"
-  }
+  },
+  "dependencies": {}
 }
