@@ -5,7 +5,7 @@
 // For this case are imported : node-sass and babel-preset-env
 // ----------------------------------------------------------------------//
 
-// import scss to bundle it with parcel
+// import scss to bundle it with ParcelJS
 import './style.scss';
 
 // MODULES
@@ -21,6 +21,7 @@ import './style.scss';
 // module1 - BUDGET CONTROLLER
 var budgetControler = (function() {
     // this is private
+    // these variables are not accesible from outside
     var Expense = function(id, description, value) {
         this.id = id;
         this.description = description;
@@ -44,6 +45,20 @@ var budgetControler = (function() {
     };
 
     // this is public
+    // we return an object which contains methods they are public
+    return {
+        addItem: function(type, des, val) {
+            var newItem, ID;
+            ID = 0;
+            if (type === 'exp') {
+                newItem = new Expense(type, des, val);
+            } else if (type === 'inc') {
+                newItem = new Income(type, des, val);
+            }
+            data.allItems[type].push(newItem);
+            return newItem;
+        }
+    };
 })();
 
 // ----------------------------------------------------------------------//
@@ -104,11 +119,11 @@ var controller = (function(budgetCtrl, UICtrl) {
         console.log(input);
     };
 
-    // ---------- private scope ------------//
+    // ---------- public scope ------------//
     return {
         init: function(params) {
             console.log('application started');
-            setupEventListeners();
+            setupEventListeners(); // this activate all event listeners
         }
     };
 })(budgetControler, UIController);
