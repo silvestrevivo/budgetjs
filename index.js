@@ -19,15 +19,15 @@ import './style.scss';
 
 // ----------------------------------------------------------------------//
 // module1 - BUDGET CONTROLLER
-var budgetControler = (function() {
+var budgetControler = (function () {
     // this is private
     // these variables are not accesible from outside
-    var Expense = function(id, description, value) {
+    var Expense = function (id, description, value) {
         this.id = id;
         this.description = description;
         this.value = value;
     };
-    var Income = function(id, description, value) {
+    var Income = function (id, description, value) {
         this.id = id;
         this.description = description;
         this.value = value;
@@ -47,15 +47,19 @@ var budgetControler = (function() {
     // this is public
     // we return an object which contains methods they are public
     return {
-        addItem: function(type, des, val) {
+        addItem: function (type, des, val) {
             var newItem, ID;
-            ID = 0;
+
+            ID = data.allItems[type].length > 0 ?
+                data.allItems[type][data.allItems[type].length - 1].id + 1 : 0
+
             if (type === 'exp') {
-                newItem = new Expense(type, des, val);
+                newItem = new Expense(ID, des, val);
             } else if (type === 'inc') {
-                newItem = new Income(type, des, val);
+                newItem = new Income(ID, des, val);
             }
             data.allItems[type].push(newItem);
+            console.log('data', data)
             return newItem;
         }
     };
@@ -63,7 +67,7 @@ var budgetControler = (function() {
 
 // ----------------------------------------------------------------------//
 // module 2 - UI CONTROLLER
-var UIController = (function() {
+var UIController = (function () {
     // this is private - internal scope
     // these variables are not accesible from outside
     var DOMstrings = {
@@ -76,7 +80,7 @@ var UIController = (function() {
     // this is public -- accesible from outside
     // we return an object which contains methods they are public
     return {
-        getInput: function() {
+        getInput: function () {
             return {
                 type: document.querySelector(DOMstrings.inputType).value,
                 description: document.querySelector(DOMstrings.inputDescription)
@@ -84,7 +88,7 @@ var UIController = (function() {
                 value: document.querySelector(DOMstrings.inputValue).value
             };
         },
-        getDOMstring: function(params) {
+        getDOMstring: function (params) {
             return DOMstrings;
         }
     };
@@ -92,12 +96,13 @@ var UIController = (function() {
 
 // ----------------------------------------------------------------------//
 // module 3 - GLOBAL APP CONTROLLER
-var controller = (function(budgetCtrl, UICtrl) {
+var controller = (function (budgetCtrl, UICtrl) {
     // ---------- private scope ------------//
     // everything here is private, thus they are not able to be expose
-    // to other external funcionts
+    // to other external functions
 
-    var setupEventListeners = function() {
+    // this function collects all eventListeners that exist in the app
+    var setupEventListeners = function () {
         // we get de values from other scopes
         var DOM = UIController.getDOMstring();
 
@@ -105,7 +110,7 @@ var controller = (function(budgetCtrl, UICtrl) {
         document
             .querySelector(DOM.inputBtn)
             .addEventListener('click', ctrlAddItem);
-        document.addEventListener('keypress', function(event) {
+        document.addEventListener('keypress', function (event) {
             if (event.keyCode === 13 || event.which === 13) {
                 //which => for old browsers
                 ctrlAddItem();
@@ -113,16 +118,18 @@ var controller = (function(budgetCtrl, UICtrl) {
         });
     };
 
-    var ctrlAddItem = function() {
+    var ctrlAddItem = function () {
         // 1. Get the field input data
         var input = UICtrl.getInput();
-        console.log(input);
+        // 2. Add the item to the budget controller
+        var newItem = budgetCtrl.addItem(input.type, input.description, input.value)
+        console.log('input', input);
     };
 
     // ---------- public scope ------------//
     return {
-        init: function(params) {
-            console.log('application started');
+        init: function () {
+            console.log('application is started');
             setupEventListeners(); // this activate all event listeners
         }
     };
